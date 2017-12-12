@@ -1,0 +1,6 @@
+<div class="thread">
+  <div class="thread-count">
+    <span>User: {{name$|async}}</span>
+    <span class="unread-messages-counter" [class.unread]="(toRead$|async)>0">Unread Msgs {{toRead$|async}}</span></div>
+</div>
+<thread-list [selectedThreadId]="uiState?.threadId" (threadSelected)="onThreadSelected($event)"  [Threads]="miniThreads$|async"></thread-list>

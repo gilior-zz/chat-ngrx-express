@@ -1,0 +1,8 @@
+<ul  class="thread-list">
+
+  <li [ngClass]="{selected: thread.id===selectedThreadId}" (click)="onThreadSelected(thread.id)" class="thread-list-item" *ngFor="let thread of Threads">
+    <h5 [class.unread]="!thread.read" class="thread-name">{{thread.parcs}}</h5>
+    <div class="thread-time">{{thread.timestamp|date:'shortTime'}}</div>
+    <div class="thread-last-message">{{thread.text}}</div>
+  </li>
+</ul>

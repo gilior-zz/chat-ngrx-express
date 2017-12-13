@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit} from '@angular/core';
 import {ThreadService} from '../services/thread.service';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/app-state';
@@ -19,7 +19,8 @@ import {Uistate} from '../../store/ui-state';
 @Component({
   selector: 'thread-section',
   templateUrl: './thread-section.component.html',
-  styleUrls: ['./thread-section.component.css']
+  styleUrls: ['./thread-section.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ThreadSectionComponent implements OnInit {
 

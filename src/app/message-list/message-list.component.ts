@@ -1,11 +1,13 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MiniMsg} from '../../../shared/view-model/miniMsg';
 import * as _ from 'lodash';
+import {ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'message-list',
   templateUrl: './message-list.component.html',
-  styleUrls: ['./message-list.component.css']
+  styleUrls: ['./message-list.component.css'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class MessageListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {

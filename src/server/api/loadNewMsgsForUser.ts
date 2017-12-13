@@ -12,7 +12,7 @@ export function loadNewMsgsForUser(app: Application) {
     const unreadMessages = unreadMessageIds.map(messageId => dbMessages[messageId]);
 
     dbMessagesQueuePerUser[participantId] = [];
-    console.log(unreadMessages);
+
     res.status(200).json({payload: unreadMessages});
   });
 }

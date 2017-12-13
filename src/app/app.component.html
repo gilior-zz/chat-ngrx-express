@@ -1,8 +1,23 @@
 <header class="l-header v-center-parent">
   <img class="v-center" routerLink="home"
        src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
-</header>
-<user-selection></user-selection>
-<thread-section></thread-section>
-<message-section></message-section>
 
+  <ul class="top-menu disable-text-selection">
+    <li class="menu-entry">
+      <a routerLink="home">Home</a>
+    </li>
+    <li class="menu-entry">
+      <a routerLink="about">About</a>
+    </li>
+  </ul>
+
+
+</header>
+
+<messages></messages>
+
+<div class="chatapp">
+
+  <router-outlet></router-outlet>
+
+</div>

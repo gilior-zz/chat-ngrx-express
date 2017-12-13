@@ -8,6 +8,7 @@ import {INIT_STORE_DATA, StoreState} from '../store-state';
 import * as _ from 'lodash';
 import {Message} from '../../../shared/model/message';
 import {stat} from 'fs';
+import {AppState} from '../app-state';
 
 const uuidv4 = require('uuid/v4');
 
@@ -29,16 +30,27 @@ export const storeReducer: ActionReducer<StoreState> = function (state: StoreSta
 };
 
 function thread_selected_action(state: StoreState, threadSelectedAction: ThreadSelectedAction) {
-  const newState = _.clone(state);
+  const newState: StoreState = {
+    participants: {...state.participants},
+    threads: {...state.threads},
+    msgs: {...state.msgs}
+  };
+  newState.threads[threadSelectedAction.payload.selectedThreadId] = {...newState.threads[threadSelectedAction.payload.selectedThreadId]};
   const thread = newState.threads[threadSelectedAction.payload.selectedThreadId];
- thread.participants[threadSelectedAction.payload.currentUserId]=0;
+  thread.participants = {...thread.participants};
+  thread.participants[threadSelectedAction.payload.currentUserId] = 0;
 
   return newState;
 }
 
 function handleNewMsg(state: StoreState, action: SndMsgAction): StoreState {
 
-  let newStoreState = _.cloneDeep(state);
+  let newStoreState: StoreState = {
+    threads: {...state.threads},
+    msgs: {...state.msgs},
+    participants: state.participants
+  };
+  newStoreState.threads[action.payload.threadId] = {...state.threads[action.payload.threadId]};
   const thread = newStoreState.threads[action.payload.threadId];
   const newMsg: Message = {
     timestamp: new Date().getTime(),
@@ -48,6 +60,7 @@ function handleNewMsg(state: StoreState, action: SndMsgAction): StoreState {
     threadId: action.payload.threadId
   };
 
+  thread.messageIds = thread.messageIds.slice(0);
   thread.messageIds.push(newMsg.id);
   newStoreState.msgs[newMsg.id] = newMsg;
   return newStoreState;
@@ -55,13 +68,22 @@ function handleNewMsg(state: StoreState, action: SndMsgAction): StoreState {
 
 
 function handleNewMsgReceived(state: StoreState, action: HandleNewMsgReceivedAction): StoreState {
-  let newStoreState = _.cloneDeep(state);
-  const newMsgs = [...action.payload.msgs];
+  let newStoreState: StoreState = {
+    threads: {...state.threads},
+    msgs: {...state.msgs},
+    participants: state.participants
+  };
+  const newMsgs = action.payload.msgs;
 
   newMsgs.forEach(msg => {
-    newStoreState.threads[msg.threadId].messageIds.push(msg.id);
     newStoreState.msgs[msg.id] = msg;
+    newStoreState.threads[msg.threadId] = {...state.threads[msg.threadId]};
+    newStoreState.threads[msg.threadId].messageIds = newStoreState.threads[msg.threadId].messageIds.slice(0);
+    newStoreState.threads[msg.threadId].messageIds.push(msg.id);
+
     if (msg.threadId != action.payload.threadId) {
+
+      newStoreState.threads[msg.threadId].participants = {...newStoreState.threads[msg.threadId].participants};
       newStoreState.threads[msg.threadId].participants[action.payload.userId] += 1;
     }
   });

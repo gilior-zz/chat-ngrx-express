@@ -4,7 +4,13 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
 import {Observable} from 'rxjs/Observable';
-
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/catch';
 declare module 'rxjs/Observable' {
   interface Observable<T> {
     debug: (...args) => Observable<T>;

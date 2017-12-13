@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 /**
  * This file is provided by Facebook for testing and evaluation purposes
  * only. Facebook reserves all rights not expressly granted.
@@ -26,11 +25,10 @@
   margin: 0;
   overflow-y: auto;
   padding: 0;
-  float: left;
 }
 
 .message-section {
-  float: left;
+  float: right;
   width: 265px;
 }
 
@@ -108,9 +106,7 @@
   margin: 0;
   font-weight: normal;
 }
-.thread{
-  float: left;
-}
+
 .message-time, .thread-time {
   color: #1976d2;
   float: right;

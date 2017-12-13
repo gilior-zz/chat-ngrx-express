@@ -6,11 +6,13 @@ import {MiniThread} from '../../../shared/view-model/miniThread';
 import {Observable} from 'rxjs/Observable';
 import {StoreState} from '../../store/store-state';
 
+const deepFreeze = require('deep-freeze-strict');
+
 export function mapStateToToMiniThread(state: AppState): MiniThread[] {
 
 
   const threads = _.values<Thread>(state.storeState.threads);
-  return threads.map(thread => {
+  return deepFreeze(threads.map(thread => {
     let names = _.keys(thread.participants).map(id =>
       state.storeState.participants[id].name
     );
@@ -25,7 +27,7 @@ export function mapStateToToMiniThread(state: AppState): MiniThread[] {
       timestamp: lastMsg.timestamp,
       read: thread.id === state.uiState.threadId || thread.participants[state.uiState.userId] === 0
     };
-  });
+  }));
 
 }
 

@@ -11,6 +11,7 @@ export const USER_SELECTED_ACTION: string = 'USER_SELECTED_ACTION';
 export const GET_MSGS_PER_THREAD_ACTION: string = 'GET_MSGS_PER_THREAD_ACTION';
 export const SND_MSG_ACTION: string = 'SND_MSG_ACTION';
 export const NEW_MSG_RCVD_ACTION: string = 'NEW_MSG_RCVD_ACTION';
+export const ERROR_ACTION: string = 'ERROR_ACTION';
 
 
 export class UserThreadsLoadedAction implements Action {
@@ -81,10 +82,19 @@ export interface NewMsgData {
   threadId: number,
   userId: number
 }
+
 export class HandleNewMsgReceivedAction {
   readonly type = NEW_MSG_RCVD_ACTION;
 
   constructor(public payload: NewMsgData) {
+
+  }
+}
+
+export class ErrorAction implements Action {
+  readonly type = ERROR_ACTION;
+
+  constructor(public payload: string) {
 
   }
 }

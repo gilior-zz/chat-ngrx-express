@@ -10,7 +10,7 @@ import {ThreadListComponent} from './thread-list/thread-list.component';
 import {MessageListComponent} from './message-list/message-list.component';
 import {ThreadService} from './services/thread.service';
 import {HttpClientModule} from '@angular/common/http';
-import {Action, ActionReducer, ActionReducerMap, combineReducers, StoreModule} from '@ngrx/store';
+import {Action, ActionReducer, ActionReducerMap, combineReducers, StoreModule,MetaReducer} from '@ngrx/store';
 import {AppState, INIT_APP_STATE} from '../store/app-state';
 
 import {Uistate} from '../store/ui-state';
@@ -25,6 +25,14 @@ import { ChatMessageComponent } from './chat-message/chat-message.component';
 import {MsgsEffectService} from '../store/effects/msgs-effect.service';
 import {ServerNotificationService} from '../store/effects/server-notification.service';
 import {MarkAsReadEffect} from '../store/effects/mark-msg-as-read.service';
+import { MessagesComponent } from './thread-section/messages/messages.component';
+import { storeFreeze } from 'ngrx-store-freeze';
+import {environment} from '../environments/environment';
+import {RouterModule} from '@angular/router';
+import {routes} from './routes';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { ChatMsgComponent } from './chat-msg/chat-msg.component';
 
 // const appStateReducer: ActionReducer<AppState> = function (state: AppState = INIT_APP_STATE, action: Action): AppState {
 //   switch (action.type) {
@@ -35,6 +43,8 @@ const reducers: ActionReducerMap<AppState> = {
   storeState: storeReducer
   , uiState: uiReducer
 };
+const metaReducers: MetaReducer<AppState>[] = !environment.production ? [storeFreeze]: [];
+
 //
 // const myReducers = {
 //   appStateReducer
@@ -48,14 +58,19 @@ const reducers: ActionReducerMap<AppState> = {
     MessageSectionComponent,
     ThreadListComponent,
     MessageListComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    MessagesComponent,
+    HomeComponent,
+    AboutComponent,
+    ChatMsgComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, {initialState: INIT_APP_STATE}),
+    StoreModule.forRoot(reducers, {initialState: INIT_APP_STATE,metaReducers:metaReducers}),
     EffectsModule.forRoot([LoadThreadsEffectService,MsgsEffectService,ServerNotificationService,MarkAsReadEffect]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    RouterModule.forRoot(routes)
   ],
   providers: [ThreadService],
   bootstrap: [AppComponent]

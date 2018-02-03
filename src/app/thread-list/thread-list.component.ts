@@ -6,7 +6,7 @@ import {MiniThread} from '../../../shared/view-model/miniThread';
 @Component({
   selector: 'thread-list',
   templateUrl: './thread-list.component.html',
-  styleUrls: ['./thread-list.component.css'],
+  styleUrls: ['./thread-list.component.css  '],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ThreadListComponent implements OnInit {

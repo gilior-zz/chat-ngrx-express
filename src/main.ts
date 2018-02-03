@@ -11,6 +11,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
+
 declare module 'rxjs/Observable' {
   interface Observable<T> {
     debug: (...args) => Observable<T>;
